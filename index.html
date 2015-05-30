@@ -50,7 +50,7 @@
 				<div class="title fleft full">{{ group.label }}</div>
 				<ul class="list single-fill">
 					<li class="list-item" ng:repeat="contact in group.contacts">
-						<a class="item" href='#/contact/view/{{ contact._id.$oid }}'>
+						<a class="item" href='#/contact/view/{{ contact.Country }}'>
 							<span class="fleft name">{{ contact.Country }}</span>
 							<span class="fright image"><img width="60" ng-src="{{ ProfileImage('60x60', contact) }}"/></span>
 						</a>
@@ -87,10 +87,10 @@
 			<div class="lists full">
 				<ul class="list single-fill">
 					<li class="list-item half" ng:repeat="contact in starred">
-						<a class="item profile-image" href='#/contact/view/{{ contact._id.$oid }}'>
+						<a class="item profile-image" href='#/contact/view/{{ contact.Country }}'>
 							<img width="100%" ng-src="{{ ProfileImage('480x480', contact) }}"/>
 							<span class="absolute bottom caption">
-								<span class="text">{{ contact.firstName + ' ' + contact.lastName }}</span>
+								<span class="text">{{ contact.Country }}</span>
 								<span class="overlay"></span>
 							</span>
 						</a>
@@ -101,8 +101,8 @@
 				<div class="title fleft full">Frequently viewed</div>
 				<ul class="list single-fill">
 					<li class="list-item" ng:repeat="contact in contacts">
-						<a class="item" href='#/contact/view/{{ contact._id.$oid }}'>
-							<span class="fleft name">{{ contact.firstName + ' ' + contact.lastName }}</span>
+						<a class="item" href='#/contact/view/{{ contact.Country }}'>
+							<span class="fleft name">{{ contact.Country }}</span>
 							<span class="fright image"><img width="60" ng-src="{{ ProfileImage('60x60', contact) }}"/></span>
 						</a>
 					</li>
@@ -141,8 +141,8 @@
 				<div class="title fleft full">{{ group.label }}</div>
 				<ul class="list single-fill">
 					<li class="list-item" ng:repeat="contact in group.contacts | filter:searchterm">
-						<a class="item" href='#/contact/view/{{ contact._id.$oid }}'>
-							<span class="fleft name">{{ contact.firstName + ' ' + contact.lastName }}</span>
+						<a class="item" href='#/contact/view/{{ contact.Country }}'>
+							<span class="fleft name">{{ contact.Country }}</span>
 							<span class="fright image"><img width="60" ng-src="{{ ProfileImage('60x60', contact) }}"/></span>
 						</a>
 					</li>
@@ -168,7 +168,7 @@
 			<a href='javascript:void(0)'><span class="entypo-pencil"></span></a>
 			<ul class="submenu">
 				<li>
-					<a href='#/contact/edit/{{ contact._id.$oid }}'>edit</a>
+					<a href='#/contact/edit/{{ contact.Country }}'>edit</a>
 				</li>
 				<li>
 					<a href='javascript:void(0)' ng-click="DeleteContact()">delete</a>
@@ -258,167 +258,10 @@
 </script>
 
 
-
-
-<script type="text/ng-template" id="edit.html">
-	<ul class="fixed top full bar topbar">
-		<li class="icon icn left">
-			<a href='javascript:void(0)' ng-click="SaveContact()"><span ng-class="{'entypo-dot': contactForm.name.$invalid, 'entypo-check': !contactForm.name.$invalid}"></span></a>
-		</li>
-		<li class="contact-name icn full" ng-bind="FullName()"></li>
-		<li class="icon icn right" ng-show="contact._id.$oid">
-			<a ng-href="#/contact/view/{{ contact._id.$oid }}"><span class="entypo-cancel"></span></a>
-		</li>
-		<li class="icon icn right" ng-show="!contact._id.$oid">
-			<a href='javascript:void(0)' ng-click="Back()"><span class="entypo-cancel"></span></a>
-		</li>
-	</ul>
-
-	<div class="content no-bottombar" id="wrapper">
-		<div class="lists fleft" id="scroller">
-
-			<form class="form" name="contactForm">
-				<div class="title fleft full">Name</div>
-				<ul class="list">
-					<li class="list-item">
-						<div class="item form-item">
-							<input type="text" name="name" maxlength="25" ng-model="contact.firstName" required />
-								<span class="form-item-decorator"></span>
-							</div>
-						</li>
-						<li class="list-item">
-							<div class="item form-item">
-								<input type="text" maxlength="25" ng-model="contact.lastName"/>
-								<span class="form-item-decorator"></span>
-							</div>
-						</li>
-					</ul>
-
-					<div class="title fleft full">Picture URL</div>
-					<ul class="list">
-						<li class="list-item">
-							<div class="item form-item field-left img">
-								<input type="text" ng-model="contact.picture"/>
-								<span class="form-item-decorator"></span>
-							</div>
-							<div class="item form-item field-right img">
-								<img width="60" ng-src="{{ ProfileImage('60x60') }}"/>
-							</div>
-						</li>
-					</ul>
-
-					<div class="title fleft full">Phone</div>
-					<ul class="list">
-						<li class="list-item" ng:repeat="item in contact.phones">
-							<div class="item form-item field-left">
-								<input type="text" ng-model="item.value"/>
-								<span class="form-item-decorator"></span>
-							</div>
-							<div class="item form-item field-right">
-								<input type="text" ng-model="item.type"/>
-								<span class="form-item-decorator"></span>
-							</div>
-							<div class="item form-item field-right-right action">
-								<button class="delete" ng-click="DiscardField('phones', $index)"><span class="entypo-cancel"></span></button>
-							</div>
-						</li>
-						<li class="list-item action">
-							<button class="save" ng-click="AddField('phones')">Add new</button>
-						</li>
-					</ul>
-
-					<div class="title fleft full">Email</div>
-					<ul class="list">
-						<li class="list-item" ng:repeat="item in contact.emails">
-							<div class="item form-item field-left">
-								<input type="text" ng-model="item.value"/>
-								<span class="form-item-decorator"></span>
-							</div>
-							<div class="item form-item field-right">
-								<input type="text" ng-model="item.type"/>
-								<span class="form-item-decorator"></span>
-							</div>
-							<div class="item form-item field-right-right action">
-								<button class="delete" ng-click="DiscardField('emails', $index)"><span class="entypo-cancel"></span></button>
-							</div>
-						</li>
-						<li class="list-item action">
-							<button class="save" ng-click="AddField('emails')">Add new</button>
-						</li>
-					</ul>
-
-					<div class="title fleft full">Address</div>
-					<ul class="list">
-						<li class="list-item" ng:repeat="item in contact.addresses">
-							<div class="item form-item field-left">
-								<input type="text" ng-model="item.value"/>
-								<span class="form-item-decorator"></span>
-							</div>
-							<div class="item form-item field-right">
-								<input type="text" ng-model="item.type"/>
-								<span class="form-item-decorator"></span>
-							</div>
-							<div class="item form-item field-right-right action">
-								<button class="delete" ng-click="DiscardField('addresses', $index)"><span class="entypo-cancel"></span></button>
-							</div>
-						</li>
-						<li class="list-item action">
-							<button class="save" ng-click="AddField('addresses')">Add new</button>
-						</li>
-					</ul>
-
-					<div class="title fleft full">Birthday</div>
-					<ul class="list">
-						<li class="list-item">
-							<div class="item form-item">
-								<input type="date" ng-model="contact.birthday"/>
-								<span class="form-item-decorator"></span>
-							</div>
-						</li>
-					</ul>
-
-					<div class="title fleft full">Websites</div>
-					<ul class="list">
-						<li class="list-item" ng:repeat="item in contact.websites">
-							<div class="item form-item field-left">
-								<input type="url" ng-model="item.value"/>
-								<span class="form-item-decorator"></span>
-							</div>
-							<div class="item form-item field-right">
-								<input type="text" ng-model="item.type"/>
-								<span class="form-item-decorator"></span>
-							</div>
-							<div class="item form-item field-right-right action">
-								<button class="delete" ng-click="DiscardField('websites', $index)"><span class="entypo-cancel"></span></button>
-							</div>
-						</li>
-						<li class="list-item action">
-							<button class="save" ng-click="AddField('websites')">Add new</button>
-						</li>
-					</ul>
-
-					<div class="title fleft full">Notes</div>
-					<ul class="list">
-						<li class="list-item">
-							<div class="item form-item">
-								<textarea ng-model="contact.notes"></textarea>
-								<span class="form-item-decorator"></span>
-							</div>
-						</li>
-					</ul>
-				</form>
-
-			</div>
-		</div>
-</script>
-
 </div>
     <script src='http://test.asaquattrocento.it/cargo/codepen.js'></script>
 
         <script src="js/index.js"></script>
-
-
-
 
   </body>
 </html>

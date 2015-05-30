@@ -62,15 +62,9 @@ var AddressBook = (function() {
 			$location.path(current_route);
 		}
 
-		$scope.ProfileImage = function(dim) {
-			return ($scope.contact && $scope.contact.picture) || "https://raw.github.com/danielemoraschi/android-addressbook/master/imgs/ic_contact_picture_"+dim+".png";
-		}
-
-		$scope.FullName = function(dim) {
-			return ($scope.contact.firstName && $scope.contact.firstName.trim())
-				? $scope.contact.firstName + ' ' + $scope.contact.lastName
-				: ($scope.contact._id ? 'No name' : 'New contact');
-		}
+		// $scope.ProfileImage = function(dim) {
+		// 	return ($scope.contact && $scope.contact.picture) || "https://raw.github.com/danielemoraschi/android-addressbook/master/imgs/ic_contact_picture_"+dim+".png";
+		// }
 
 		if($routeParams.id) {
 			Contacts.get({id: $routeParams.id}, function(contact) {
@@ -96,9 +90,10 @@ var AddressBook = (function() {
 		$scope.starred = {};
 		$scope.searchterm = '';
 
-		$scope.ProfileImage = function(dim, contact) {
-			return contact.picture ? contact.picture.replace("480x480", dim) : "https://raw.github.com/danielemoraschi/android-addressbook/master/imgs/ic_contact_picture_"+dim+".png";
-		}
+		//we could put stats in this section since it's already right aligned.
+		// $scope.ProfileImage = function(dim, contact) {
+		// 	return contact.picture ? contact.picture.replace("480x480", dim) : "https://raw.github.com/danielemoraschi/android-addressbook/master/imgs/ic_contact_picture_"+dim+".png";
+		// }
 
 		$scope.Back = function() {
 			$location.path(current_route);
@@ -136,7 +131,7 @@ var AddressBook = (function() {
 
 angular.module('jsonService', ['ngResource'])
 .factory('Contacts', function($resource) {
-	return $resource('clipped.json');
+	return $resource('countries2013.json');
 });
 
 angular.module('helpers', []).
