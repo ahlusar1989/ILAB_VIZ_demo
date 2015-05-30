@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+
+
+    <title>Android Address Book with AngularJs and MongoDB</title>
+    
+    
+    <link rel="stylesheet" href="css/normalize.css">
+
+    
+        <link rel="stylesheet" href="css/style.css">
+
+    
+    
+    
+  </head>
+
+  <body>
+
+    <style>
+@import url(http://weloveiconfonts.com/api/?family=entypo);
+[class*="entypo-"]:before {
+	font-family: 'entypo', sans-serif;
+}
+</style>
+
+<div ng-app="android-addressbook">
+	<div ng-controller="AddressBook.Init">
+	<div class="row main-app">
+		<div ng-view></div>
+	</div>
+	</div>
+
+  
+  
+<script type="text/ng-template" id="list.html">
+	<ul class="fixed top full bar topbar tabs two">
+		<li class="icon active">
+			<a href='#/contacts'><span class="entypo-user"></span></a>
+		</li>
+		<li class="icon">
+			<a href='#/contacts/starred'><span class="entypo-star"></span></a>
+		</li>
+	</ul>
+	<div class="content" id="wrapper">
+		<div class="lists" id="scroller">
+			<div ng:repeat="group in groups">
+				<div class="title fleft full">{{ group.label }}</div>
+				<ul class="list single-fill">
+					<li class="list-item" ng:repeat="contact in group.contacts">
+						<a class="item" href='#/contact/view/{{ contact._id.$oid }}'>
+							<span class="fleft name">{{ contact.firstName + ' ' + contact.lastName }}</span>
+							<span class="fright image"><img width="60" ng-src="{{ ProfileImage('60x60', contact) }}"/></span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<ul class="fixed bottom full bar bottombar">
+		<li class="icon icn left">
+			<a href='#/contacts/search'><span class="entypo-search"></span></a>
+		</li>
+		<li class="icon icn center">
+			<a href='#/contact/add'><span class="entypo-user-add"></span></a>
+		</li>
+	</ul>
+</script>
+
+  
+  
+
+<script type="text/ng-template" id="starred.html">
+	<ul class="fixed top full bar topbar tabs two">
+		<li class="icon">
+			<a href='#/contacts'><span class="entypo-user"></span></a>
+		</li>
+		<li class="icon active">
+			<a href='#/contacts/starred'><span class="entypo-star"></span></a>
+		</li>
+	</ul>
+	
+	<div class="content" id="wrapper">
+		<div id="scroller" class="fleft">
+			<div class="lists full">
+				<ul class="list single-fill">
+					<li class="list-item half" ng:repeat="contact in starred">
+						<a class="item profile-image" href='#/contact/view/{{ contact._id.$oid }}'>
+							<img width="100%" ng-src="{{ ProfileImage('480x480', contact) }}"/>
+							<span class="absolute bottom caption">
+								<span class="text">{{ contact.firstName + ' ' + contact.lastName }}</span>
+								<span class="overlay"></span>
+							</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="lists">
+				<div class="title fleft full">Frequently viewed</div>
+				<ul class="list single-fill">
+					<li class="list-item" ng:repeat="contact in contacts">
+						<a class="item" href='#/contact/view/{{ contact._id.$oid }}'>
+							<span class="fleft name">{{ contact.firstName + ' ' + contact.lastName }}</span>
+							<span class="fright image"><img width="60" ng-src="{{ ProfileImage('60x60', contact) }}"/></span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	<ul class="fixed bottom full bar bottombar">
+		<li class="icon icn left">
+			<a href='#/contacts/search'><span class="entypo-search"></span></a>
+		</li>
+		<li class="icon icn center">
+			<a href='#/contact/add'><span class="entypo-user-add"></span></a>
+		</li>
+	</ul>
+</script>
+
+<script type="text/ng-template" id="search.html">
+	<ul class="fixed top full bar topbar">
+		<li class="icon icn left">
+			<a href='javascript:void(0)' ng-click="Back()"><span class="entypo-left-open-big"></span></a>
+		</li>
+		<li class="contact-name icn full form">
+			<div class="form-item">
+				<input placeholder="Find contacts" type="text" id="searchterm" name="searchterm" ng-model="searchterm"/>
+				<span class="form-item-decorator"></span>
+				<span class="cancel entypo-cancel-circled" ng-show="searchterm" ng-click="searchterm=''"></span>
+			</div>
+		</li>
+	</ul>
+	
+	<div class="content no-bottombar" id="wrapper">
+		<div class="lists" id="scroller">
+			<div ng:repeat="group in groups">
+				<div class="title fleft full">{{ group.label }}</div>
+				<ul class="list single-fill">
+					<li class="list-item" ng:repeat="contact in group.contacts | filter:searchterm">
+						<a class="item" href='#/contact/view/{{ contact._id.$oid }}'>
+							<span class="fleft name">{{ contact.firstName + ' ' + contact.lastName }}</span>
+							<span class="fright image"><img width="60" ng-src="{{ ProfileImage('60x60', contact) }}"/></span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</script>
+
+  
+  
+  
+<script type="text/ng-template" id="view.html">
+	<ul class="fixed top full bar topbar">
+		<li class="icon icn left">
+			<a href='javascript:void(0)' ng-click="Back()"><span class="entypo-left-open-big"></span></a>
+		</li>
+		<li class="contact-name icn full" ng-bind="FullName()"></li>
+		<li class="icon icn right sec">
+			<a href='javascript:void(0)'><span ng-click="StarUnStar()" ng-class="{'entypo-star': contact.starred, 'entypo-star-empty': !contact.starred}"></span></a>
+		</li>
+		<li class="icon icn right" ng-click="_submenu()" ng-class="{'show-submenu': submenu}">
+			<a href='javascript:void(0)'><span class="entypo-pencil"></span></a>
+			<ul class="submenu">
+				<li>
+					<a href='#/contact/edit/{{ contact._id.$oid }}'>edit</a>
+				</li>
+				<li>
+					<a href='javascript:void(0)' ng-click="DeleteContact()">delete</a>
+				</li>
+			</ul>
+		</li>
+	</ul>
+	
+	<div class="content no-bottombar" id="wrapper">
+		<div class="lists fleft" id="scroller">
+			
+			<div class="profile-image" ng-click="_showImage()" ng-class="{open: selected}">
+				<img ng-src="{{ ProfileImage('480x480') }}"/>
+			</div>
+			
+			<div ng-show="contact.phones.length">
+				<div class="title fleft full">Phone</div>
+				<ul class="list">
+					<li class="list-item" ng:repeat="item in contact.phones">
+						<a class="item" href="tel:{{ item.value }}">
+							<span class="value">{{ item.value }}</span>
+							<span class="label">{{ item.type }}</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			
+			<div ng-show="contact.emails.length">
+				<div class="title fleft full">Email</div>
+				<ul class="list">
+					<li class="list-item" ng:repeat="item in contact.emails">
+						<a class="item" target="_black" href="mailto:{{ item.value }}">
+							<span class="value">{{ item.value }}</span>
+							<span class="label">{{ item.type }}</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			
+			<div ng-show="contact.addresses.length">
+				<div class="title fleft full">Address</div>
+				<ul class="list">
+					<li class="list-item" ng:repeat="item in contact.addresses">
+						<a class="item" target="_black" href="https://maps.google.com/maps?q={{ item.value }}">
+							<span class="value">{{ item.value }}</span>
+							<span class="label">{{ item.type }}</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			
+			<div ng-show="contact.birthday">
+				<div class="title fleft full">Birthday</div>
+				<ul class="list">
+					<li class="list-item">
+						<span class="item">
+							<span class="value">{{ contact.birthday }}</span>
+						</span>
+					</li>
+				</ul>
+			</div>
+			
+			<div ng-show="contact.websites.length">
+				<div class="title fleft full">Websites</div>
+				<ul class="list">
+					<li class="list-item" ng:repeat="item in contact.websites">
+						<a class="item" target="_black" href="{{ item.value }}">
+							<span class="value">{{ item.value }}</span>
+							<span class="label">{{ item.type }}</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			
+			<div ng-show="contact.notes">
+				<div class="title fleft full">Notes</div>
+				<ul class="list">
+					<li class="list-item">
+						<span class="item">
+							<span class="value">{{ contact.notes }}</span>
+						</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</script>
+
+  
+  
+  
+<script type="text/ng-template" id="edit.html">
+	<ul class="fixed top full bar topbar">
+		<li class="icon icn left">
+			<a href='javascript:void(0)' ng-click="SaveContact()"><span ng-class="{'entypo-dot': contactForm.name.$invalid, 'entypo-check': !contactForm.name.$invalid}"></span></a>
+		</li>
+		<li class="contact-name icn full" ng-bind="FullName()"></li>
+		<li class="icon icn right" ng-show="contact._id.$oid">
+			<a ng-href="#/contact/view/{{ contact._id.$oid }}"><span class="entypo-cancel"></span></a>
+		</li>
+		<li class="icon icn right" ng-show="!contact._id.$oid">
+			<a href='javascript:void(0)' ng-click="Back()"><span class="entypo-cancel"></span></a>
+		</li>
+	</ul>
+	
+	<div class="content no-bottombar" id="wrapper">
+		<div class="lists fleft" id="scroller">
+			
+			<form class="form" name="contactForm">
+				<div class="title fleft full">Name</div>
+				<ul class="list">
+					<li class="list-item">
+						<div class="item form-item">
+							<input type="text" name="name" maxlength="25" ng-model="contact.firstName" required />
+								<span class="form-item-decorator"></span>
+							</div>
+						</li>
+						<li class="list-item">
+							<div class="item form-item">
+								<input type="text" maxlength="25" ng-model="contact.lastName"/>
+								<span class="form-item-decorator"></span>
+							</div>
+						</li>
+					</ul>
+					
+					<div class="title fleft full">Picture URL</div>
+					<ul class="list">
+						<li class="list-item">
+							<div class="item form-item field-left img">
+								<input type="text" ng-model="contact.picture"/>
+								<span class="form-item-decorator"></span>
+							</div>
+							<div class="item form-item field-right img">
+								<img width="60" ng-src="{{ ProfileImage('60x60') }}"/>
+							</div>
+						</li>
+					</ul>
+					
+					<div class="title fleft full">Phone</div>
+					<ul class="list">
+						<li class="list-item" ng:repeat="item in contact.phones">
+							<div class="item form-item field-left">
+								<input type="text" ng-model="item.value"/>
+								<span class="form-item-decorator"></span>
+							</div>
+							<div class="item form-item field-right">
+								<input type="text" ng-model="item.type"/>
+								<span class="form-item-decorator"></span>
+							</div>
+							<div class="item form-item field-right-right action">
+								<button class="delete" ng-click="DiscardField('phones', $index)"><span class="entypo-cancel"></span></button>
+							</div>
+						</li>
+						<li class="list-item action">
+							<button class="save" ng-click="AddField('phones')">Add new</button>
+						</li>
+					</ul>
+					
+					<div class="title fleft full">Email</div>
+					<ul class="list">
+						<li class="list-item" ng:repeat="item in contact.emails">
+							<div class="item form-item field-left">
+								<input type="text" ng-model="item.value"/>
+								<span class="form-item-decorator"></span>
+							</div>
+							<div class="item form-item field-right">
+								<input type="text" ng-model="item.type"/>
+								<span class="form-item-decorator"></span>
+							</div>
+							<div class="item form-item field-right-right action">
+								<button class="delete" ng-click="DiscardField('emails', $index)"><span class="entypo-cancel"></span></button>
+							</div>
+						</li>
+						<li class="list-item action">
+							<button class="save" ng-click="AddField('emails')">Add new</button>
+						</li>
+					</ul>
+					
+					<div class="title fleft full">Address</div>
+					<ul class="list">
+						<li class="list-item" ng:repeat="item in contact.addresses">
+							<div class="item form-item field-left">
+								<input type="text" ng-model="item.value"/>
+								<span class="form-item-decorator"></span>
+							</div>
+							<div class="item form-item field-right">
+								<input type="text" ng-model="item.type"/>
+								<span class="form-item-decorator"></span>
+							</div>
+							<div class="item form-item field-right-right action">
+								<button class="delete" ng-click="DiscardField('addresses', $index)"><span class="entypo-cancel"></span></button>
+							</div>
+						</li>
+						<li class="list-item action">
+							<button class="save" ng-click="AddField('addresses')">Add new</button>
+						</li>
+					</ul>
+					
+					<div class="title fleft full">Birthday</div>
+					<ul class="list">
+						<li class="list-item">
+							<div class="item form-item">
+								<input type="date" ng-model="contact.birthday"/>
+								<span class="form-item-decorator"></span>
+							</div>
+						</li>
+					</ul>
+					
+					<div class="title fleft full">Websites</div>
+					<ul class="list">
+						<li class="list-item" ng:repeat="item in contact.websites">
+							<div class="item form-item field-left">
+								<input type="url" ng-model="item.value"/>
+								<span class="form-item-decorator"></span>
+							</div>
+							<div class="item form-item field-right">
+								<input type="text" ng-model="item.type"/>
+								<span class="form-item-decorator"></span>
+							</div>
+							<div class="item form-item field-right-right action">
+								<button class="delete" ng-click="DiscardField('websites', $index)"><span class="entypo-cancel"></span></button>
+							</div>
+						</li>
+						<li class="list-item action">
+							<button class="save" ng-click="AddField('websites')">Add new</button>
+						</li>
+					</ul>
+					
+					<div class="title fleft full">Notes</div>
+					<ul class="list">
+						<li class="list-item">
+							<div class="item form-item">
+								<textarea ng-model="contact.notes"></textarea>
+								<span class="form-item-decorator"></span>
+							</div>
+						</li>
+					</ul>
+				</form>
+				
+			</div>
+		</div>
+</script>
+
+</div>
+    <script src='http://test.asaquattrocento.it/cargo/codepen.js'></script>
+
+        <script src="js/index.js"></script>
+
+    
+    
+    
+  </body>
+</html>

@@ -1,0 +1,651 @@
+@width: 480px;
+
+@base-fontsize: 16px;
+@icons-fontsize: 20px;
+
+@main-color: #51B4E3;
+@light-color: #A6D6EA;
+@bkg-color: #eee;
+@bottombar-bkg: #555;
+
+@text-color: #000;
+@icons-color: #fff;
+
+@list-bottomborder-color: #ddd;
+@labels-color: #6F6F6F;
+
+@topbar-height: 50px;
+@bottombar-height: 50px;
+
+@tabs-height: @topbar-height;
+@starred-caption-height: 40px;
+@profile-image-height: 180px;
+
+@titles-height: 30px;
+@list-padding: 20px;
+@list-item-height: 60px;
+@list-item-lineheight: 20px;
+@list-item-padding: 10px;
+
+@in-width: @width - (@list-padding * 2);
+
+@submenu-minwidth: 200px;
+@submenu-bkg: #eee;
+@submenu-shadow: #999;
+@submenu-bordercolor: #ccc;
+@submenu-item-height: 40px;
+@submenu-item-padding: 0 20px;
+
+.opacity(@v) {
+	-webkit-opacity: @v;
+	-moz-opacity: @v;
+	-o-opacity: @v;
+	opacity: @v;
+}
+
+.box-shadow(@x, @y, @h, @color) {
+	-webkit-box-shadow: @x @y @h @color;
+	-moz-box-shadow: @x @y @h @color;
+	-o-box-shadow: @x @y @h @color;
+	box-shadow: @x @y @h @color;
+}
+
+.border-box() {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	box-sizing: border-box; 
+}
+
+
+/*****/
+
+.fixed {
+	position: fixed;
+}
+
+.absolute {
+	position: absolute;
+}
+
+ul, ol,
+.zero {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.full {
+	width: 100%;
+}
+
+.fixed.full,
+.absolute.full {
+	width: @width;
+}
+
+.top {
+	top: 0;
+}
+
+.bottom {
+	bottom: 0;
+}
+
+.fleft {
+	float: left;
+}
+
+.fright {
+	float: right;
+}
+
+.overlay {
+	background: #000;
+	position: absolute;
+	top: 0; bottom: 0;
+	left: 0; right: 0;
+	.opacity(0.6);
+}
+
+/*****/
+
+body,
+html {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	font: @base-fontsize Helvetica, sans-serif;
+	color: @main-color;
+	background: #000 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAJ0lEQVQIW2M0Njb+f+/ePQYYYBQUFPyvpKTEABMEC4BkYYJwAZggADGyDjN7QaaVAAAAAElFTkSuQmCC);
+}
+
+a {
+	text-decoration: none;
+	color: @text-color;
+}
+
+#scroller {
+	width: 100%;
+	.border-box;
+}
+
+.row {
+	position: relative;
+	margin: auto;
+	width: @width;
+}
+
+.content {
+	z-index: 1;
+	position: fixed;
+	background: @bkg-color;
+	top: @topbar-height;
+	bottom: @bottombar-height;
+	width: @width;
+}
+
+.content.no-bottombar {
+	bottom: 0;
+}
+
+.topbar {
+	z-index: 2;
+	height: @topbar-height;
+	background: @main-color;
+	.box-shadow(0, 2px, 10px, #888);
+}
+
+.bottombar {
+	z-index: 2;
+	height: @bottombar-height;
+	background: @bottombar-bkg;
+}
+
+.title {
+	font-size: @base-fontsize - 2%;
+	color: @main-color;
+	border-bottom: 2px solid @main-color;
+	height: @titles-height;
+	line-height: @titles-height;
+	text-transform: uppercase;
+}
+
+/*****/
+
+.lists {
+	float: left;
+	width: @in-width;
+	padding: (@list-padding / 2) @list-padding (@list-padding / 2) @list-padding;
+}
+
+.lists.full {
+	width: @width;
+	padding: 0;
+}
+
+.list,
+.list-item,
+.list-item .item {
+	float: left;
+	width: 100%;
+	position: relative;
+}
+
+.list-item .item {
+	display: block;
+	line-height: @list-item-lineheight;
+	padding: @list-item-padding 0;
+	border-top: 1px solid @list-bottomborder-color;
+}
+
+
+.list.single-fill .list-item .item {
+	position: relative;
+	padding: 0;
+	height: @list-item-height;
+	line-height: @list-item-height;
+}
+
+.list.single-fill .list-item.half {
+	width: 50%;
+	overflow: hidden;
+}
+
+.list.single-fill .list-item.half .item {
+	overflow: hidden;
+	height: @profile-image-height;
+	border-top: none;
+}
+
+.list.single-fill .list-item.half .item.profile-image {
+	left: 0;
+	top: 0;
+}
+
+.list.single-fill .list-item.half .item.profile-image img {
+	margin-top: -15%;
+}
+
+.list.single-fill .caption {
+	height: @starred-caption-height;
+	width: 100%;
+}
+
+.caption .text{
+	position: absolute;
+	top: 0; bottom: 0;
+	left: 0; right: 0;
+	line-height: @starred-caption-height;
+	padding: 0 20px;
+	width: 100%;
+	color: #fff;
+	z-index: 2;
+	.border-box;
+}
+
+.list-item:first-child .item {
+	color: @text-color;
+	border-top: none;
+}
+
+.list-item span.fleft {
+	width: @in-width - @list-item-height;
+}
+
+.list-item span.fright {
+	width: @list-item-height;
+	height: @list-item-height;
+	overflow: hidden;
+}
+
+.list-item span.fright img {
+	float: right;
+}
+
+.list-item .item .label {
+	display: block;
+	text-transform: uppercase;
+	font-size: @base-fontsize - 2%;
+	color: #666;
+}
+
+
+/*****/
+
+.tabs > li > a,
+.tabs > li {
+	float: left;
+}
+
+.tabs > li {
+	width: 50%;
+	height: @tabs-height - 5px;
+}
+
+.tabs.three > li {
+	width: 33.33%;
+}
+
+.tabs > li:hover,
+.tabs > li.active {
+	border-bottom: 5px solid @icons-color;
+}
+
+.tabs > li > a {
+	width: 100%;
+	height: @tabs-height - 20%;
+	line-height: @tabs-height - 20%;
+	margin-top: (@tabs-height - (@tabs-height - 20%)) / 2;
+	text-align: center;
+	border-right: 1px solid @light-color;
+}
+
+.tabs > li:last-child > a {
+	border-right: none;
+}
+
+/*****/
+
+.icon > a {
+	color: @icons-color;
+	font-size: @icons-fontsize;
+}
+
+.bar .icn,
+.bar .icn > a {
+	display: block;
+	width: @bottombar-height;
+	height: @bottombar-height;
+	line-height: @bottombar-height;
+	text-align: center;
+}
+
+.bar .icn {
+	position: absolute;
+	z-index: 2;
+}
+
+.bar .icn.left {
+	left: 0;
+}
+
+.bar .icn.right {
+	right: 0;
+}
+
+.bar .icn.right.sec {
+	right: 60px;
+}
+
+.bar .icn.center {
+	left: 50%;
+	margin-left: -(@bottombar-height / 2);
+}
+
+.bar .icn.full {
+	z-index: 1;
+	float: left;
+	padding-left: 60px;
+	width: auto;
+}
+
+.bar .icn.full.centred {
+	padding-left: 0;
+	float: none;
+	width: 100%;
+}
+
+.bar .icn.action,
+.bar .icn.action a {
+	width: auto;
+	font-size: @base-fontsize;
+}
+
+.bar .icn.action a span {
+	font-size: @base-fontsize + 6%;
+}
+
+.bar .icn.action a {
+	padding: 0 10px;
+}
+
+.bar .icn.action a span{
+	padding-right: 10px;
+}
+
+.contact-name {
+	color: @icons-color;
+	font-size: @base-fontsize + 2%;
+	font-weight: bold;
+}
+
+/*****/
+
+.submenu {
+	display: none;
+	position: absolute;
+	text-align: left;
+	min-width: @submenu-minwidth;
+	background: @submenu-bkg;
+	right: @list-padding / 2;
+	.box-shadow(0, 2px, 5px, @submenu-shadow);
+}
+
+.show-submenu .submenu {
+	display: block;
+}
+
+.submenu li a {
+	height: @submenu-item-height;
+	line-height: @submenu-item-height;
+	padding: @submenu-item-padding;
+	display: block;
+	text-transform: capitalize;
+}
+
+.submenu li {
+	border-bottom: 1px solid @submenu-bordercolor;
+}
+
+.submenu li:last-child a {
+	border-bottom:none;
+}
+
+/*****/
+
+.profile-image {
+	position: relative;
+	overflow: hidden;
+	height: @profile-image-height;
+	width: @width;
+	left: -@list-padding;
+	top: -(@list-padding / 2);
+}
+
+.profile-image img {
+	position: absolute;
+	margin-top: -40%;
+	width: 100%;
+}
+
+.profile-image.open {
+	height:auto;
+}
+
+.profile-image.open img {
+	position: static;
+	margin-top: 0;
+}
+
+/******/
+
+.form .title {
+	padding-left: 10px;
+	.border-box; 
+}
+
+.form .list-item:last-child {
+	margin-bottom: 20px;
+}
+
+.form .form-item {
+	position: relative;
+	height: auto;
+	min-height: auto;
+	border-top: none;
+	width: 100%;
+	padding: 10px;
+	.border-box;
+}
+
+.form .list-item button {
+	border: none;
+	background: none;
+	margin: 0;
+	text-transform: uppercase;
+	font-size: @base-fontsize - 2%;
+	color: #666;
+}
+
+.form .list-item.action button {
+	padding: 5px 10px 0;
+	margin: 10px 0 0;
+}
+
+.form .form-item.action {
+	text-align: center;
+}
+
+.form .form-item.action button {
+	font-size: @base-fontsize + 10%;
+}
+
+.form .form-item input,
+.form .form-item textarea {
+	width: 100%;
+	border: none;
+	background: none;
+	margin: 0;
+	padding: 7px 0 3px;
+}
+
+.form .form-item .form-item-decorator {
+	width: 99%;
+	height: 5px;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	border-bottom: 1px solid @list-bottomborder-color;
+	border-left: 1px solid @list-bottomborder-color;
+	border-right: 1px solid @list-bottomborder-color;
+}
+
+.form .form-item input:focus,
+.form .form-item textarea:focus {
+	outline: none
+}
+
+form .form-item input:focus + .form-item-decorator,
+form .form-item textarea:focus + .form-item-decorator {
+	border-color: @main-color;
+}
+
+form .form-item input.ng-invalid + .form-item-decorator {
+	border-color: red;
+}
+
+.form .form-item.field-left {
+	width: 62%;
+}
+
+.form .form-item.field-right {
+	width: 23%;
+}
+
+.form .form-item.field-right-right {
+	width: 15%;
+	padding: 10px 0
+}
+
+.form .form-item.field-left.img {
+	width: 70%;
+}
+
+.form .form-item.field-right.img {
+	width: 30%;
+	padding: (@list-padding / 2) 0;
+}
+
+.form .form-item.field-right img {
+	float: right;
+	padding: 0 @list-padding;
+}
+
+.bar .icn.full.contact-name {
+	text-align: left;
+	max-width: 50%;
+	overflow: hidden;
+}
+
+.bar .icn.full.contact-name.form {
+	width: @width - @list-padding;
+	max-width: @width - @list-padding;
+	.border-box;
+}
+
+.contact-name.form .form-item {
+	height: @topbar-height - (@list-padding / 2);
+	padding-top: 0;
+}
+
+.contact-name.form .form-item .cancel {
+	position: absolute;
+	right: @list-padding / 2;
+	top: 0;
+}
+
+.contact-name.form .form-item input {
+	color: @icons-color;
+}
+
+.contact-name.form .form-item ::-webkit-input-placeholder {
+	color: @icons-color;
+}
+.contact-name.form .form-item :-moz-placeholder {
+	color: @icons-color;
+}
+.contact-name.form .form-item ::-moz-placeholder {
+	color: @icons-color;
+}
+.contact-name.form .form-item placeholder {
+	color: @icons-color;
+}
+
+
+/*********************/
+
+
+
+@media only screen and (max-device-width : 480px) {
+	.fixed.full,
+	.absolute.full,
+	.row,
+	.content,
+	.lists.full {
+		width: 100%;
+	}
+
+	.profile-image {
+		width: 108%;
+	}
+
+	.lists {
+		padding: 2% 4% 2% 4%;
+		width: 92%;
+	}
+
+	.lists {
+		width: 92%;
+	}
+
+	.list-item span.fleft {
+		width: 80%;
+	}
+
+	.list-item span.fright {
+		width: 20%;
+	}
+
+	.submenu {
+		right: 20%;
+	}
+
+	.profile-image {
+		left: -4%;
+		margin-top: -2%;
+	}
+
+	.form .form-item.field-right img {
+		padding: 0 2%;
+	}
+
+	.list.single-fill .list-item.half .item.profile-image img {
+		margin-top: -5%;
+	}
+
+	.list.single-fill .list-item.half .item.profile-image img {
+		margin-top: -5%; 
+	}
+
+	.bar .icn.full.contact-name.form {
+		width: 96%;
+	}
+
+	.contact-name.form .form-item .cancel {
+		right: 2%; 
+	}
+}
