@@ -16,6 +16,12 @@
 [class*="entypo-"]:before {
 	font-family: 'entypo', sans-serif;
 }
+body{
+  color: #373737;
+}
+h1,h2,h3,h4,h5,h6{
+  color: #51b4e3;
+}
 li{
     margin-bottom: 15px;
 }
@@ -28,7 +34,7 @@ li.list-item{
 .good-item.labels{
     display: inline-block;
     position: relative;
-    background-color: #56A0D3;
+    background-color: #51b4e3;
     border-radius: 3px;
     color: #fff;
     font-weight: 600;
@@ -90,6 +96,12 @@ li.list-item{
     height: 25px;
     background-size:contain;
     margin: 10px auto;
+}
+.t-val{
+  margin-bottom: 15px;
+}
+.t-val span:first-child{
+  font-weight: 600;
 }
 </style>
 
@@ -257,7 +269,7 @@ li.list-item{
         </tr>
       </thead>
       <tbody>
-        <tr ng:repeat="item in contact.Goods">
+        <tr ng-repeat="item in contact.Goods">
           <td>{{item.Good_Name}}</td>
           <td><div class="stat{{item.Child_Labor}}"></div></td>
           <td><div class="stat{{item.Forced_Child_Labor}}"></div></td>
@@ -268,7 +280,11 @@ li.list-item{
 
     <div ng-if="contact.t2">
       <h4>Table 2</h4>
-        {{contact.t2}}
+        <div ng-repeat="(key, value) in contact.t2">
+          <div class="t-val">
+            <span> {{key}} </span> <span> {{ value }} </span>
+          </div>
+        </div>
     </div>
     <div ng-if="!(contact.t2)">
       "Laws and Regulations Related to Child Labor: No information provided"
@@ -276,7 +292,11 @@ li.list-item{
 
     <div ng-if="contact.t7">
       <h4>Table 7</h4>
-        {{contact.t7}}
+      <div ng-repeat="(key, value) in contact.t7">
+        <div class="t-val">
+          <span> {{key}} </span> <span> {{ value }} </span>
+        </div>
+      </div>
     </div>
     <div ng-if="!(contact.t7)">
       "Suggested Government Actions to Eliminate Child Labor, Including its Worst Forms"
