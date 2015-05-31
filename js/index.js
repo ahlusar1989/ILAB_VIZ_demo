@@ -75,6 +75,7 @@ var AddressBook = (function() {
 					} else if ($scope.contact.Tables[t]['title'] === "Suggested Government Actions to Eliminate Child Labor, Including its Worst Forms"){
 						$scope.contact.t7 = $scope.contact.Tables[t];
 					}
+					_iScroll();
 				}
 				console.log($scope.contact)
 
