@@ -119,7 +119,9 @@ li.list-item{
 }
 
 .card.area{
-  height: 350px;
+  /*height: 350px;*/
+  width: 100%;
+  height: auto;
 }
 
 .card-title{
@@ -175,6 +177,12 @@ li.list-item{
 .block{
   display:block;
   width: 100%;
+}
+.block.t7{
+  margin-top:20px;
+}
+.block.t7 .title{
+  margin-bottom:10px;
 }
 
 @media screen and (max-width: 870px) {
@@ -329,21 +337,23 @@ li.list-item{
           </div>
         </div>
 
-        <div style="display:block;" ng-if="contact.t2.notes.length > 0">
-          Notes:
+        <div ng-if="contact.t2.notes.length > 0">
+          <div style="overflow:auto;width:100%;display:block;">Notes:
           <span ng-repeat="note in contact.t2.notes">
             {{note.symbol}}{{note.text}}
           </span>
+          </div>
         </div>
 
     </div>
     <div ng-if="!(contact.t2)">
-      "Laws and Regulations Related to Child Labor: No information provided"
+      <div class="title">Laws and Regulations Related to Child Labor</div>
+      <p class="test"><span>No information provided</span></p>
     </div>
 
-    <div class="block" ng-if="contact.t7">
+    <div class="block t7" ng-if="contact.t7">
 
-      <div class="">{{contact.t7.title}}</div>
+      <div class="title">{{contact.t7.title}}</div>
       <div>{{contact.t7.summary}}</div>
       <div>Areas</div>
 
@@ -371,7 +381,8 @@ li.list-item{
 
     </div>
     <div ng-if="!(contact.t7)">
-      "Suggested Government Actions to Eliminate Child Labor, Including its Worst Forms"
+      <div class="title">Suggested Government Actions to Eliminate Child Labor, Including its Worst Forms</div>
+      <p class="test"><span>No information provided</span></p>
     </div>
 
 		</div>
