@@ -16,6 +16,8 @@ Best in Mobile / Chrome / Safari
 Released under the MIT License:
 http://www.opensource.org/licenses/mit-license.php
 */
+
+var app = angular.module('myapp', ['ngRoute', 'jsonService']);
 var AddressBook = (function() {
 
 	var iscroll, current_route,
@@ -37,18 +39,16 @@ var AddressBook = (function() {
 		var self = this;
 		$scope.selected = false;
 		$scope.submenu = false;
-		$scope.contact = {
-			starred: false,
-			firstName: "",
-			lastName: "",
-			birthday: "",
-			picture: "",
-			phones: [],
-			emails: [],
-			addresses: [],
-			websites: [],
-			notes: ""
-		};
+		// $scope.contact = {
+		// 	country: "",
+		// 	groups: []
+		// }
+		// $scope.isGroupShown = function(group) {
+		// 	console.log(group)
+		// 	$scope.contact = Contacts.get({"_id": $routeParams.id});
+		// 	return $scope.contact;
+		// };
+
 
 		$scope._showImage = function() {
 			$scope.selected = !$scope.selected;
@@ -67,16 +67,22 @@ var AddressBook = (function() {
 		// }
 
 		if($routeParams.id) {
-			Contacts.get({id: $routeParams.id}, function(contact) {
-				self.original = contact;
-				if(!self.original.views) {
-					self.original.views = 0;
-				}
-				self.original.views++;
-				$scope.contact = new Contacts(self.original);
-				$scope.contact.update();
-				_iScroll();
-			});
+			Contacts.query(function(contacts) {
+				console.log(contacts[$routeParams.id])
+				$scope.contact = contacts[$routeParams.id];
+			})
+			// Contacts.get({"_id": $routeParams.id}, function(contact) {
+			// 	console.log("contact area")
+			// 	console.log(contact)
+			// 	self.original = contact;
+			// 	if(!self.original.views) {
+			// 		self.original.views = 0;
+			// 	}
+			// 	self.original.views++;
+			// 	$scope.contact = new Contacts(self.original);
+			// 	$scope.contact.update();
+			// 	_iScroll();
+			// });
 		} else {
 			_iScroll();
 		}

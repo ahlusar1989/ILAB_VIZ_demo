@@ -24,6 +24,12 @@
 [class*="entypo-"]:before {
 	font-family: 'entypo', sans-serif;
 }
+li{
+    margin-bottom: 15px;
+}
+.good-item{
+    margin:5px 0;
+}
 </style>
 
 <div ng-app="android-addressbook">
@@ -50,7 +56,7 @@
 				<div class="title fleft full">{{ group.label }}</div>
 				<ul class="list single-fill">
 					<li class="list-item" ng:repeat="contact in group.contacts">
-						<a class="item" href='#/contact/view/{{ contact.Country }}'>
+						<a class="item" href='#/contact/view/{{ contact._id }}'>
 							<span class="fleft name">{{ contact.Country }}</span>
 							<span class="fright image"><img width="60" ng-src="{{ ProfileImage('60x60', contact) }}"/></span>
 						</a>
@@ -87,7 +93,7 @@
 			<div class="lists full">
 				<ul class="list single-fill">
 					<li class="list-item half" ng:repeat="contact in starred">
-						<a class="item profile-image" href='#/contact/view/{{ contact.Country }}'>
+						<a class="item profile-image" href='#/contact/view/{{ contact._id }}'>
 							<img width="100%" ng-src="{{ ProfileImage('480x480', contact) }}"/>
 							<span class="absolute bottom caption">
 								<span class="text">{{ contact.Country }}</span>
@@ -101,7 +107,7 @@
 				<div class="title fleft full">Frequently viewed</div>
 				<ul class="list single-fill">
 					<li class="list-item" ng:repeat="contact in contacts">
-						<a class="item" href='#/contact/view/{{ contact.Country }}'>
+						<a class="item" href='#/contact/view/{{ contact._id }}'>
 							<span class="fleft name">{{ contact.Country }}</span>
 							<span class="fright image"><img width="60" ng-src="{{ ProfileImage('60x60', contact) }}"/></span>
 						</a>
@@ -141,7 +147,7 @@
 				<div class="title fleft full">{{ group.label }}</div>
 				<ul class="list single-fill">
 					<li class="list-item" ng:repeat="contact in group.contacts | filter:searchterm">
-						<a class="item" href='#/contact/view/{{ contact.Country }}'>
+						<a class="item" href='#/contact/view/{{ contact._id }}'>
 							<span class="fleft name">{{ contact.Country }}</span>
 							<span class="fright image"><img width="60" ng-src="{{ ProfileImage('60x60', contact) }}"/></span>
 						</a>
@@ -168,7 +174,7 @@
 			<a href='javascript:void(0)'><span class="entypo-pencil"></span></a>
 			<ul class="submenu">
 				<li>
-					<a href='#/contact/edit/{{ contact.Country }}'>edit</a>
+					<a href='#/contact/edit/{{ contact._id }}'>edit</a>
 				</li>
 				<li>
 					<a href='javascript:void(0)' ng-click="DeleteContact()">delete</a>
@@ -180,86 +186,26 @@
 	<div class="content no-bottombar" id="wrapper">
 		<div class="lists fleft" id="scroller">
 
-			<div class="profile-image" ng-click="_showImage()" ng-class="{open: selected}">
-				<img ng-src="{{ ProfileImage('480x480') }}"/>
-			</div>
+        <h3>{{ contact.Country }}</h3>
 
-			<div ng-show="contact.phones.length">
-				<div class="title fleft full">Phone</div>
-				<ul class="list">
-					<li class="list-item" ng:repeat="item in contact.phones">
-						<a class="item" href="tel:{{ item.value }}">
-							<span class="value">{{ item.value }}</span>
-							<span class="label">{{ item.type }}</span>
-						</a>
-					</li>
-				</ul>
-			</div>
+		<ul class="list">
+			<li class="list-item" ng:repeat="item in contact.Goods">
+                <p class="good-item">Good name: {{item.Good_Name}}</p>
+                <p class="good-item">Child Labor: {{item.Child_Labor}}</p>
+                <p class="good-item">Forced Child Labor: {{item.Forced_Child_Labor}}</p>
+                <p class="good-item">Forced Labor: {{item.Forced_Labor}}</p>
+			</li>
+		</ul>
 
-			<div ng-show="contact.emails.length">
-				<div class="title fleft full">Email</div>
-				<ul class="list">
-					<li class="list-item" ng:repeat="item in contact.emails">
-						<a class="item" target="_black" href="mailto:{{ item.value }}">
-							<span class="value">{{ item.value }}</span>
-							<span class="label">{{ item.type }}</span>
-						</a>
-					</li>
-				</ul>
-			</div>
 
-			<div ng-show="contact.addresses.length">
-				<div class="title fleft full">Address</div>
-				<ul class="list">
-					<li class="list-item" ng:repeat="item in contact.addresses">
-						<a class="item" target="_black" href="https://maps.google.com/maps?q={{ item.value }}">
-							<span class="value">{{ item.value }}</span>
-							<span class="label">{{ item.type }}</span>
-						</a>
-					</li>
-				</ul>
-			</div>
-
-			<div ng-show="contact.birthday">
-				<div class="title fleft full">Birthday</div>
-				<ul class="list">
-					<li class="list-item">
-						<span class="item">
-							<span class="value">{{ contact.birthday }}</span>
-						</span>
-					</li>
-				</ul>
-			</div>
-
-			<div ng-show="contact.websites.length">
-				<div class="title fleft full">Websites</div>
-				<ul class="list">
-					<li class="list-item" ng:repeat="item in contact.websites">
-						<a class="item" target="_black" href="{{ item.value }}">
-							<span class="value">{{ item.value }}</span>
-							<span class="label">{{ item.type }}</span>
-						</a>
-					</li>
-				</ul>
-			</div>
-
-			<div ng-show="contact.notes">
-				<div class="title fleft full">Notes</div>
-				<ul class="list">
-					<li class="list-item">
-						<span class="item">
-							<span class="value">{{ contact.notes }}</span>
-						</span>
-					</li>
-				</ul>
-			</div>
 		</div>
 	</div>
 </script>
 
 
 </div>
-    <script src='http://test.asaquattrocento.it/cargo/codepen.js'></script>
+    <script src="http://test.asaquattrocento.it/cargo/codepen.js"></script>
+
 
         <script src="js/index.js"></script>
 
