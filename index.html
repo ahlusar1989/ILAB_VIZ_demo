@@ -103,6 +103,47 @@ li.list-item{
 .t-val span:first-child{
   font-weight: 600;
 }
+
+.card{
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  overflow: hidden;
+  margin: 15px 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  /*width: 50%;
+  min-width: 300px;*/
+  /*float: left;*/
+}
+
+.card-title{
+  /*border-radius: 7px 7px 0px 0px;*/
+  border-bottom: 1px solid #ccc;
+  /*background-color: #ccc;*/
+  /*color: #fff;*/
+  /*font-weight: 600;*/
+  padding: 7px;
+}
+.card-body{
+  padding: 7px;
+}
+.card-body div{
+  margin: 5px 0;
+}
+
+.label{
+  padding: 3px 5px;
+  border-radius: 2px;
+  color: #fff;
+  display:inline-block;
+  margin-left: 10px;
+}
+.label.enacted{
+  background-color: #3dbf1d;
+}
+.label.not-enacted{
+  background-color: #d31818;
+}
 </style>
 
 <div ng-app="android-addressbook">
@@ -146,58 +187,6 @@ li.list-item{
 	</ul>
 </script>
 
-
-
-<!--
-<script type="text/ng-template" id="starred.html">
-	<ul class="fixed top full bar topbar tabs two">
-		<li class="icon">
-			<a href='#/contacts'><span class="entypo-user"></span></a>
-		</li>
-		<li class="icon active">
-			<a href='#/contacts/starred'><span class="entypo-star"></span></a>
-		</li>
-	</ul>
-
-	<div class="content" id="wrapper">
-		<div id="scroller" class="fleft">
-			<div class="lists full">
-				<ul class="list single-fill">
-					<li class="list-item half" ng:repeat="contact in starred">
-						<a class="item profile-image" href='#/contact/view/{{ contact._id }}'>
-							<img width="100%" ng-src="{{ ProfileImage('480x480', contact) }}"/>
-							<span class="absolute bottom caption">
-								<span class="text">{{ contact.Country }}</span>
-								<span class="overlay"></span>
-							</span>
-						</a>
-					</li>
-				</ul>
-			</div>
-			<div class="lists">
-				<div class="title fleft full">Frequently viewed</div>
-				<ul class="list single-fill">
-					<li class="list-item" ng:repeat="contact in contacts">
-						<a class="item" href='#/contact/view/{{ contact._id }}'>
-							<span class="fleft name">{{ contact.Country }}</span>
-							<span class="fright image"><img width="60" ng-src="{{ ProfileImage('60x60', contact) }}"/></span>
-						</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</div>
-
-	<ul class="fixed bottom full bar bottombar">
-		<li class="icon icn left">
-			<a href='#/contacts/search'><span class="entypo-search"></span></a>
-		</li>
-		<li class="icon icn center">
-			<a href='#/contact/add'><span class="entypo-user-add"></span></a>
-		</li>
-	</ul>
-</script> -->
-
 <script type="text/ng-template" id="search.html">
 	<ul class="fixed top full bar topbar">
 		<li class="icon icn left">
@@ -237,21 +226,7 @@ li.list-item{
 		<li class="icon icn left">
 			<a href='javascript:void(0)' ng-click="Back()"><span class="entypo-left-open-big"></span></a>
 		</li>
-		<li class="contact-name icn full" ng-bind="FullName()"></li>
-		<li class="icon icn right sec">
-			<a href='javascript:void(0)'><span ng-click="StarUnStar()" ng-class="{'entypo-star': contact.starred, 'entypo-star-empty': !contact.starred}"></span></a>
-		</li>
-		<li class="icon icn right" ng-click="_submenu()" ng-class="{'show-submenu': submenu}">
-			<a href='javascript:void(0)'><span class="entypo-pencil"></span></a>
-			<ul class="submenu">
-				<li>
-					<a href='#/contact/edit/{{ contact._id }}'>edit</a>
-				</li>
-				<li>
-					<a href='javascript:void(0)' ng-click="DeleteContact()">delete</a>
-				</li>
-			</ul>
-		</li>
+
 	</ul>
 
 	<div class="content no-bottombar" id="wrapper">
@@ -259,7 +234,7 @@ li.list-item{
 
         <h3>{{ contact.Country }}</h3>
 
-		<table class="table stats">
+		<table ng-if="contact.Goods.length > 0" class="table stats">
       <thead>
         <tr>
           <th>Good name</th>
@@ -279,12 +254,35 @@ li.list-item{
     </table>
 
     <div ng-if="contact.t2">
-      <h4>Table 2</h4>
-        <div ng-repeat="(key, value) in contact.t2">
-          <div class="t-val">
-            <span> {{key}} </span> <span> {{ value }} </span>
+            <h3>{{contact.t2.title}}</h3>
+            <div>{{contact.t2.summary}}</div>
+            <div>Standards</div>
+
+          <div ng-repeat="standard in contact.t2.standards" class="card">
+            <div class="card-title">
+              {{standard.title}}
+              <div class="label enacted" ng-if="standard.enacted === 'Yes'">
+                Enacted
+              </div>
+              <div class="label not-enacted" ng-if="standard.enacted === 'No'">
+                Not Enacted
+              </div>
+            </div>
+            <div class="card-body">
+              <div>Age, {{standard.age}}</div>
+              <div>Related Legislation</div>
+              <div>Sources: {{standard.related_legislation.sources}}</div>
+              <div>Legislation: {{standard.related_legislation.legislation}}</div>
+            </div>
           </div>
-        </div>
+
+          <div ng-if="contact.t2.notes.length > 0">
+            Notes:
+            <span ng-repeat="note in contact.t2.notes">
+              {{note.symbol}}{{note.text}}
+            </span>
+          </div>
+          
     </div>
     <div ng-if="!(contact.t2)">
       "Laws and Regulations Related to Child Labor: No information provided"

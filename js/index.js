@@ -68,7 +68,6 @@ var AddressBook = (function() {
 
 				$scope.contact = contacts[$routeParams.id];
 
-				$scope.contact.t7 = "Suggested Government Actions to Eliminate Child Labor, Including its Worst Forms: No information provided";
 				for(var t in $scope.contact.Tables){
 					if($scope.contact.Tables[t]['title'] === "Laws and Regulations Related to Child Labor"){
 						$scope.contact.t2 = $scope.contact.Tables[t];
