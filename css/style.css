@@ -133,6 +133,9 @@ a {
   height: 60px;
   line-height: 60px;
 }
+.list.single-fill .list-item .item .adv-lvl{
+  line-height: 20px;
+}
 .list.single-fill .list-item.half {
   width: 50%;
   overflow: hidden;
@@ -184,12 +187,7 @@ a {
 .list-item span.fright img {
   float: right;
 }
-.list-item .item .label {
-  display: block;
-  text-transform: uppercase;
-  font-size: 14px;
-  color: #666;
-}
+
 /*****/
 .tabs > li > a,
 .tabs > li {
@@ -688,23 +686,27 @@ li.adv{
   float:right;
   width:200px;
   text-align: left;
+  margin-top:16px;
 }
-.Moderate-Advancement{
-background-color: #ccc;
+
+.No-Advancement{
+background-color: #d31818;
 }
 .Minimal-Advancement{
-background-color: #ccc;
+background-color: #FF8330;
+}
+.Moderate-Advancement{
+background-color: #FFE030;
+color: #373737;
 }
 .Significant-Advancement{
-background-color: #ccc;
-}
-.No-Advancement{
-background-color: #ccc;
-}
-.No-Assessment{
-background-color: #ccc;
+background-color: #3dbf1d;
 }
 .Significant{
+background-color: #3dbf1d;
+}
+
+.No-Assessment{
 background-color: #ccc;
 }
 .Democratic{
