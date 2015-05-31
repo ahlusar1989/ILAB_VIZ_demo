@@ -111,11 +111,15 @@ li.list-item{
   overflow: hidden;
   margin: 15px 0;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  max-width: 30%;
+  width: 30%;
   margin-right: 25px;
   height: 275px;
   min-width: 250px;
   float: left;
+}
+
+.card.area{
+  height: 350px;
 }
 
 .card-title{
@@ -168,19 +172,23 @@ li.list-item{
 .card-title .title-sect.No{
   width: 60%;
 }
+.block{
+  display:block;
+  width: 100%;
+}
+
 @media screen and (max-width: 870px) {
   .card{
-    max-width: 46%;
+    width: 46%;
   }
 }
 @media screen and (max-width: 720px) {
   .card{
-    max-width: 43%;
+    width: 43%;
   }
 }
 @media screen and (max-width: 595px) {
   .card{
-    max-width: 100%;
     width: 100%;
     height: auto;
   }
@@ -294,12 +302,12 @@ li.list-item{
       </tbody>
     </table>
 
-    <div ng-if="contact.t2">
+    <div class="block" ng-if="contact.t2">
             <h3 class="title">{{contact.t2.title}}</h3>
             <div>{{contact.t2.summary}}</div>
             <div>Standards</div>
 
-        <div ng-repeat="standard in contact.t2.standards">
+        <div class="correct-size" ng-repeat="standard in contact.t2.standards">
           <div class="card">
 
             <div class="card-title">
@@ -321,7 +329,7 @@ li.list-item{
           </div>
         </div>
 
-        <div ng-if="contact.t2.notes.length > 0">
+        <div style="display:block;" ng-if="contact.t2.notes.length > 0">
           Notes:
           <span ng-repeat="note in contact.t2.notes">
             {{note.symbol}}{{note.text}}
@@ -333,13 +341,34 @@ li.list-item{
       "Laws and Regulations Related to Child Labor: No information provided"
     </div>
 
-    <div ng-if="contact.t7">
-      <h4>Table 7</h4>
-      <div ng-repeat="(key, value) in contact.t7">
-        <div class="t-val">
-          <span> {{key}} </span> <span> {{ value }} </span>
+    <div class="block" ng-if="contact.t7">
+
+      <div class="">{{contact.t7.title}}</div>
+      <div>{{contact.t7.summary}}</div>
+      <div>Areas</div>
+
+      <div ng-repeat="area in contact.t7.areas">
+        <div class="card area">
+
+          <div class="card-title">
+            {{area.area}}
+          </div>
+
+          <div ng-repeat="act in area.actions" class="card-body">
+          <div class="title">{{act.years}}</div>
+            {{act.action}}
+          </div>
+
         </div>
       </div>
+
+      <div ng-if="contact.t7.notes.length > 0">
+        Notes:
+        <span ng-repeat="note in contact.t7.notes">
+          {{note.symbol}}{{note.text}}
+        </span>
+      </div>
+
     </div>
     <div ng-if="!(contact.t7)">
       "Suggested Government Actions to Eliminate Child Labor, Including its Worst Forms"
