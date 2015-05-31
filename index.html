@@ -16,191 +16,6 @@
 [class*="entypo-"]:before {
 	font-family: 'entypo', sans-serif;
 }
-body{
-  color: #373737;
-}
-h1,h2,h3,h4,h5,h6{
-  color: #51b4e3;
-}
-li{
-    margin-bottom: 15px;
-}
-li.list-item{
-  margin-bottom: 0px;
-}
-.good-item{
-    margin:5px 0;
-}
-.good-item.labels{
-    display: inline-block;
-    position: relative;
-    background-color: #51b4e3;
-    border-radius: 3px;
-    color: #fff;
-    font-weight: 600;
-    padding: 3px 5px 2px;
-    line-height: 20px;
-    font-size: 14px;
-    margin-right: 5px;
-}
-.fleft.name{
-    min-width: 250px;
-}
-
-.circle {
-	border-radius: 50%;
-  /*border-radius: 5px;*/
-	width: 30px;
-	height: 30px;
-  background-color: #51b4e3;
-  color: #fff;
-  display: inline-block;
-  text-align: center;
-  vertical-align: middle;
-}
-
-.circle div{
-  margin-top:-14px;
-}
-
-.num0{
-  display: none;
-}
-
-.tabs > li {
-  width: 189px;
-}
-.table.stats tr{
-  margin-bottom: 5px;
-}
-.table.stats th, .table.stats td{
-  color: #373737;
-  padding: 0 5px;
-}
-.table.stats td:first-child, .table.stats th:first-child{
-  text-align: left;
-}
-.table.stats td{
-  text-align: center;
-}
-.statT {
-    background-image: url("images/check.svg");
-    width: 25px;
-    height: 25px;
-    background-size:contain;
-    margin: 10px auto;
-}
-.statF {
-    background-image: url("images/ex.svg");
-    width: 25px;
-    height: 25px;
-    background-size:contain;
-    margin: 10px auto;
-}
-.t-val{
-  margin-bottom: 15px;
-}
-.t-val span:first-child{
-  font-weight: 600;
-}
-
-.card{
-  border-radius: 3px;
-  border: 1px solid #ccc;
-  background-color: #fff;
-  overflow: hidden;
-  margin: 15px 0;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  width: 30%;
-  margin-right: 25px;
-  height: 275px;
-  min-width: 250px;
-  float: left;
-}
-
-.card.area{
-  /*height: 350px;*/
-  width: 100%;
-  height: auto;
-}
-
-.card-title{
-  /*border-radius: 7px 7px 0px 0px;*/
-  border-bottom: 1px solid #ccc;
-  /*background-color: #ccc;*/
-  /*color: #fff;*/
-  /*font-weight: 600;*/
-  padding: 7px;
-  overflow: auto;
-}
-.card-title .title-sect{
-  width: 69%;
-  min-width: 0;
-  float: left;
-}
-.card-title .label{
-  float:right;
-  /*margin-top:-3px;*/
-  min-width:51px;
-}
-.card-body{
-  padding: 7px;
-}
-.card-body div{
-  margin: 5px 0;
-}
-
-.label{
-  padding: 3px 5px;
-  border-radius: 2px;
-  color: #fff;
-  display:inline-block;
-  /*margin-left: 10px;*/
-}
-.label.enacted{
-  background-color: #3dbf1d;
-}
-.label.not-enacted{
-  background-color: #d31818;
-}
-/*article {
-  -webkit-column-count: 3;
-     -moz-column-count: 3;
-          column-count: 3;
-}*/
-.test span{
-  color: #bdbdbd;
-}
-.card-title .title-sect.No{
-  width: 60%;
-}
-.block{
-  display:block;
-  width: 100%;
-}
-.block.t7{
-  margin-top:20px;
-}
-.block.t7 .title{
-  margin-bottom:10px;
-}
-
-@media screen and (max-width: 870px) {
-  .card{
-    width: 46%;
-  }
-}
-@media screen and (max-width: 720px) {
-  .card{
-    width: 43%;
-  }
-}
-@media screen and (max-width: 595px) {
-  .card{
-    width: 100%;
-    height: auto;
-  }
-}
 </style>
 
 <div ng-app="android-addressbook">
@@ -216,7 +31,10 @@ li.list-item{
 			<a href='#/contacts'>Countries</a>
 		</li>
 		<li class="icon goods">
-			<a href='#/contacts/starred'>Goods</a>
+			<a href='#/contacts'>Goods</a>
+		</li>
+    <li class="icon adv">
+			<a href='#/contacts'>Advancement Level</a>
 		</li>
 	</ul>
 	<div class="content" id="wrapper">
@@ -228,6 +46,7 @@ li.list-item{
 						<a class="item" href='#/contact/view/{{ contact._id }}'>
 							<span class="fleft name">{{ contact.Country }}</span>
               <div class="circle num{{contact.Goods.length}}"><div>{{contact.Goods.length}}</div></div>
+              <div class="adv-lvl"><div>{{contact.Advancement_Level}}</div></div>
 						</a>
 					</li>
 				</ul>
@@ -289,9 +108,29 @@ li.list-item{
 	<div class="content no-bottombar" id="wrapper">
 		<div class="lists fleft" id="scroller">
 
-        <h3>{{ contact.Country }}</h3>
+        <h3>{{ contact.Country }} <div class="label {{slug}}">{{contact.Advancement_Level}}</div></h3>
+        <p>{{contact.Description}}</p>
+        <hr />
+    <div class="row">
+      <div class="lefty">
+      <div class="title">Stats</div>
+        <div class="bold">Children Working and Studying (7-14 yrs old)</div>
+        <div>Age Range: {{contact["Children Working and Studying (7-14 yrs old)"][0]["Age_Range"]}}</div>
+        <div>Year: {{contact["Children Working and Studying (7-14 yrs old)"][0]["Year"]}}</div>
 
-		<table ng-if="contact.Goods.length > 0" class="table stats">
+        <div class="bold">Childrens Work Statistics</div>
+        <div>Age Range: {{contact["Children\'s Work Statistics"][0]["Age_Range"]}}</div>
+        <div>Total Percentage: {{contact["Children\'s Work Statistics"][0]["Total_Percentage_of_Working_Children"]}}</div>
+        <div>Year: {{contact["Children\'s Work Statistics"][0]["Year"]}}</div>
+
+        <div class="bold">Education Statistics: Attendance Statistics</div>
+        <div>Age Range: {{contact["Education Statistics: Attendance Statistics"][0]["Age_Range"]}}</div>
+        <div>Total Percentage: {{contact["Education Statistics: Attendance Statistics"][0]["Percentage"]}}</div>
+        <div>Year: {{contact["Education Statistics: Attendance Statistics"][0]["Year"]}}</div>
+      </div>
+
+		<table ng-if="contact.Goods.length > 0" class="table stats lefty">
+    <div class="title">Goods</div>
       <thead>
         <tr>
           <th>Good name</th>
@@ -309,11 +148,12 @@ li.list-item{
         </tr>
       </tbody>
     </table>
+    </div>
 
     <div class="block" ng-if="contact.t2">
             <h3 class="title">{{contact.t2.title}}</h3>
             <div>{{contact.t2.summary}}</div>
-            <div>Standards</div>
+            <div class="bold">Standards</div>
 
         <div class="correct-size" ng-repeat="standard in contact.t2.standards">
           <div class="card">
@@ -344,6 +184,9 @@ li.list-item{
           </span>
           </div>
         </div>
+        <div ng-if="contact.t2.notes.length === 0">
+          <div style="overflow:auto;width:100%;display:block;"></div>
+        </div>
 
     </div>
     <div ng-if="!(contact.t2)">
@@ -355,7 +198,7 @@ li.list-item{
 
       <div class="title">{{contact.t7.title}}</div>
       <div>{{contact.t7.summary}}</div>
-      <div>Areas</div>
+      <div class="bold">Areas</div>
 
       <div ng-repeat="area in contact.t7.areas">
         <div class="card area">

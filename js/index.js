@@ -67,6 +67,7 @@ var AddressBook = (function() {
 			Contacts.query(function(contacts) {
 
 				$scope.contact = contacts[$routeParams.id];
+				$scope.slug = $scope.contact.Advancement_Level.split(' ').join('-');
 
 				for(var t in $scope.contact.Tables){
 					if($scope.contact.Tables[t]['title'] === "Laws and Regulations Related to Child Labor"){
