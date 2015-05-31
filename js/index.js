@@ -59,10 +59,6 @@ var AddressBook = (function() {
 			$location.path(current_route);
 		}
 
-		// $scope.ProfileImage = function(dim) {
-		// 	return ($scope.contact && $scope.contact.picture) || "https://raw.github.com/danielemoraschi/android-addressbook/master/imgs/ic_contact_picture_"+dim+".png";
-		// }
-
 		if($routeParams.id) {
 			Contacts.query(function(contacts) {
 
