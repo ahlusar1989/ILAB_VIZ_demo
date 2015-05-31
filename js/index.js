@@ -71,18 +71,6 @@ var AddressBook = (function() {
 				console.log(contacts[$routeParams.id])
 				$scope.contact = contacts[$routeParams.id];
 			})
-			// Contacts.get({"_id": $routeParams.id}, function(contact) {
-			// 	console.log("contact area")
-			// 	console.log(contact)
-			// 	self.original = contact;
-			// 	if(!self.original.views) {
-			// 		self.original.views = 0;
-			// 	}
-			// 	self.original.views++;
-			// 	$scope.contact = new Contacts(self.original);
-			// 	$scope.contact.update();
-			// 	_iScroll();
-			// });
 		} else {
 			_iScroll();
 		}
@@ -137,7 +125,7 @@ var AddressBook = (function() {
 
 angular.module('jsonService', ['ngResource'])
 .factory('Contacts', function($resource) {
-	return $resource('countries2013.json');
+	return $resource('data/countries2013.json');
 });
 
 angular.module('helpers', []).
@@ -151,7 +139,7 @@ factory('Utils', function() {
           label: ch,
           contacts: []
         });
-        into[ch].contacts.push(source[i]);
+        into[ch].contacts.unshift(source[i]);
       };
     }
   }

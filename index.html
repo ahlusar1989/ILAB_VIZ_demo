@@ -3,18 +3,10 @@
   <head>
     <meta charset="UTF-8">
 
-
-    <title>Android Address Book with AngularJs and MongoDB</title>
-
+    <title>Child Labor Data</title>
 
     <link rel="stylesheet" href="css/normalize.css">
-
-
-        <link rel="stylesheet" href="css/style.css">
-
-
-
-
+    <link rel="stylesheet" href="css/style.css">
   </head>
 
   <body>
@@ -30,6 +22,21 @@ li{
 .good-item{
     margin:5px 0;
 }
+.good-item.labels{
+    display: inline-block;
+    position: relative;
+    background-color: #56A0D3;
+    border-radius: 3px;
+    color: #fff;
+    font-weight: 600;
+    padding: 3px 5px 2px;
+    line-height: 20px;
+    font-size: 14px;
+    margin-right: 5px;
+}
+.fleft.name{
+    min-width: 250px;
+}
 </style>
 
 <div ng-app="android-addressbook">
@@ -38,8 +45,6 @@ li{
 		<div ng-view></div>
 	</div>
 	</div>
-
-
 
 <script type="text/ng-template" id="list.html">
 	<ul class="fixed top full bar topbar tabs two">
@@ -58,7 +63,9 @@ li{
 					<li class="list-item" ng:repeat="contact in group.contacts">
 						<a class="item" href='#/contact/view/{{ contact._id }}'>
 							<span class="fleft name">{{ contact.Country }}</span>
-							<span class="fright image"><img width="60" ng-src="{{ ProfileImage('60x60', contact) }}"/></span>
+                            <span class="grouper" ng:repeat="item in contact.Goods">
+                            <span class="good-item labels">{{item.Good_Name}}</span>
+                            </span>
 						</a>
 					</li>
 				</ul>
@@ -77,7 +84,7 @@ li{
 
 
 
-
+<!--
 <script type="text/ng-template" id="starred.html">
 	<ul class="fixed top full bar topbar tabs two">
 		<li class="icon">
@@ -125,7 +132,7 @@ li{
 			<a href='#/contact/add'><span class="entypo-user-add"></span></a>
 		</li>
 	</ul>
-</script>
+</script> -->
 
 <script type="text/ng-template" id="search.html">
 	<ul class="fixed top full bar topbar">
