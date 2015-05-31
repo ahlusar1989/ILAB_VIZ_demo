@@ -19,6 +19,9 @@
 li{
     margin-bottom: 15px;
 }
+li.list-item{
+  margin-bottom: 0px;
+}
 .good-item{
     margin:5px 0;
 }
@@ -37,6 +40,30 @@ li{
 .fleft.name{
     min-width: 250px;
 }
+
+.circle {
+	border-radius: 50%;
+  /*border-radius: 5px;*/
+	width: 30px;
+	height: 30px;
+  background-color: #51b4e3;
+  color: #fff;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.circle div{
+  margin-top:-14px;
+}
+
+.num0{
+  display: none;
+}
+
+.tabs > li {
+  width: 189px;
+}
 </style>
 
 <div ng-app="android-addressbook">
@@ -48,11 +75,11 @@ li{
 
 <script type="text/ng-template" id="list.html">
 	<ul class="fixed top full bar topbar tabs two">
-		<li class="icon active">
-			<a href='#/contacts'><span class="entypo-user"></span></a>
+		<li class="icon countries active">
+			<a href='#/contacts'>Countries</a>
 		</li>
-		<li class="icon">
-			<a href='#/contacts/starred'><span class="entypo-star"></span></a>
+		<li class="icon goods">
+			<a href='#/contacts/starred'>Goods</a>
 		</li>
 	</ul>
 	<div class="content" id="wrapper">
@@ -63,9 +90,7 @@ li{
 					<li class="list-item" ng:repeat="contact in group.contacts">
 						<a class="item" href='#/contact/view/{{ contact._id }}'>
 							<span class="fleft name">{{ contact.Country }}</span>
-                            <span class="grouper" ng:repeat="item in contact.Goods">
-                            <span class="good-item labels">{{item.Good_Name}}</span>
-                            </span>
+              <div class="circle num{{contact.Goods.length}}"><div>{{contact.Goods.length}}</div></div>
 						</a>
 					</li>
 				</ul>
