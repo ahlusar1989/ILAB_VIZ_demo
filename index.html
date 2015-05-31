@@ -104,7 +104,7 @@
 	<div class="content no-bottombar" id="wrapper">
 		<div class="lists fleft" id="scroller">
 
-        <h3>{{ contact.Country }} <div class="label {{slug}}">{{contact.Advancement_Level}}</div></h3>
+        <h2>{{ contact.Country }} <div class="label {{slug}}">{{contact.Advancement_Level}}</div></h2>
         <p>{{contact.Description}}</p>
         <hr />
     <div class="row">
@@ -112,12 +112,12 @@
       <div class="title">Stats</div>
         <div class="bold">Children Working and Studying (7-14 yrs old)</div>
         <div>Age Range: {{contact["Children Working and Studying (7-14 yrs old)"][0]["Age_Range"]}}</div>
-        <div>Year: {{contact["Children Working and Studying (7-14 yrs old)"][0]["Year"]}}</div>
+        <div>Year: {{contact["Children Working and Studying (7-14 yrs old)"][0]["Year"].replace('.0', '') }}</div>
 
         <div class="bold">Childrens Work Statistics</div>
         <div>Age Range: {{contact["Children\'s Work Statistics"][0]["Age_Range"]}}</div>
         <div>Total Percentage: {{contact["Children\'s Work Statistics"][0]["Total_Percentage_of_Working_Children"]}}</div>
-        <div>Year: {{contact["Children\'s Work Statistics"][0]["Year"]}}</div>
+        <div>Year: {{contact["Children\'s Work Statistics"][0]["Year"].replace('.0', '') }}</div>
 
         <div class="bold">Education Statistics: Attendance Statistics</div>
         <div>Age Range: {{contact["Education Statistics: Attendance Statistics"][0]["Age_Range"]}}</div>
