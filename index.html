@@ -64,6 +64,9 @@ li.list-item{
 .tabs > li {
   width: 189px;
 }
+.table.stats tr{
+  margin-bottom: 5px;
+}
 .table.stats th, .table.stats td{
   color: #373737;
   padding: 0 5px;
@@ -73,6 +76,20 @@ li.list-item{
 }
 .table.stats td{
   text-align: center;
+}
+.statT {
+    background-image: url("images/check.svg");
+    width: 25px;
+    height: 25px;
+    background-size:contain;
+    margin: 10px auto;
+}
+.statF {
+    background-image: url("images/ex.svg");
+    width: 25px;
+    height: 25px;
+    background-size:contain;
+    margin: 10px auto;
 }
 </style>
 
@@ -242,12 +259,28 @@ li.list-item{
       <tbody>
         <tr ng:repeat="item in contact.Goods">
           <td>{{item.Good_Name}}</td>
-          <td>{{item.Child_Labor}}</td>
-          <td>{{item.Forced_Child_Labor}}</td>
-          <td>{{item.Forced_Labor}}</td>
+          <td><div class="stat{{item.Child_Labor}}"></div></td>
+          <td><div class="stat{{item.Forced_Child_Labor}}"></div></td>
+          <td><div class="stat{{item.Forced_Labor}}"></div></td>
         </tr>
       </tbody>
     </table>
+
+    <div ng-if="contact.t2">
+      <h4>Table 2</h4>
+        {{contact.t2}}
+    </div>
+    <div ng-if="!(contact.t2)">
+      "Laws and Regulations Related to Child Labor: No information provided"
+    </div>
+
+    <div ng-if="contact.t7">
+      <h4>Table 7</h4>
+        {{contact.t7}}
+    </div>
+    <div ng-if="!(contact.t7)">
+      "Suggested Government Actions to Eliminate Child Labor, Including its Worst Forms"
+    </div>
 
 		</div>
 	</div>
@@ -255,9 +288,11 @@ li.list-item{
 
 
 </div>
-    <script src="http://test.asaquattrocento.it/cargo/codepen.js"></script>
+    <!-- <script src="http://test.asaquattrocento.it/cargo/codepen.js"></script> -->
 
-
+        <script src="js/iscroll.js"></script>
+        <script src="js/angular.min.js"></script>
+        <script src="js/angular-resource.min.js"></script>
         <script src="js/index.js"></script>
 
   </body>

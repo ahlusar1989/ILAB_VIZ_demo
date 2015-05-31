@@ -39,10 +39,7 @@ var AddressBook = (function() {
 		var self = this;
 		$scope.selected = false;
 		$scope.submenu = false;
-		// $scope.contact = {
-		// 	country: "",
-		// 	groups: []
-		// }
+
 		// $scope.isGroupShown = function(group) {
 		// 	console.log(group)
 		// 	$scope.contact = Contacts.get({"_id": $routeParams.id});
@@ -68,8 +65,19 @@ var AddressBook = (function() {
 
 		if($routeParams.id) {
 			Contacts.query(function(contacts) {
-				console.log(contacts[$routeParams.id])
+
 				$scope.contact = contacts[$routeParams.id];
+
+				$scope.contact.t7 = "Suggested Government Actions to Eliminate Child Labor, Including its Worst Forms: No information provided";
+				for(var t in $scope.contact.Tables){
+					if($scope.contact.Tables[t]['title'] === "Laws and Regulations Related to Child Labor"){
+						$scope.contact.t2 = $scope.contact.Tables[t];
+					} else if ($scope.contact.Tables[t]['title'] === "Suggested Government Actions to Eliminate Child Labor, Including its Worst Forms"){
+						$scope.contact.t7 = $scope.contact.Tables[t];
+					}
+				}
+				console.log($scope.contact)
+
 			})
 		} else {
 			_iScroll();
