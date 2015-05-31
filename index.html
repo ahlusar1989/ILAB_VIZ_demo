@@ -111,9 +111,11 @@ li.list-item{
   overflow: hidden;
   margin: 15px 0;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  /*width: 50%;
-  min-width: 300px;*/
-  /*float: left;*/
+  max-width: 30%;
+  margin-right: 25px;
+  height: 275px;
+  min-width: 250px;
+  float: left;
 }
 
 .card-title{
@@ -123,6 +125,17 @@ li.list-item{
   /*color: #fff;*/
   /*font-weight: 600;*/
   padding: 7px;
+  overflow: auto;
+}
+.card-title .title-sect{
+  width: 69%;
+  min-width: 0;
+  float: left;
+}
+.card-title .label{
+  float:right;
+  /*margin-top:-3px;*/
+  min-width:51px;
 }
 .card-body{
   padding: 7px;
@@ -136,13 +149,41 @@ li.list-item{
   border-radius: 2px;
   color: #fff;
   display:inline-block;
-  margin-left: 10px;
+  /*margin-left: 10px;*/
 }
 .label.enacted{
   background-color: #3dbf1d;
 }
 .label.not-enacted{
   background-color: #d31818;
+}
+/*article {
+  -webkit-column-count: 3;
+     -moz-column-count: 3;
+          column-count: 3;
+}*/
+.test span{
+  color: #bdbdbd;
+}
+.card-title .title-sect.No{
+  width: 60%;
+}
+@media screen and (max-width: 870px) {
+  .card{
+    max-width: 46%;
+  }
+}
+@media screen and (max-width: 720px) {
+  .card{
+    max-width: 43%;
+  }
+}
+@media screen and (max-width: 595px) {
+  .card{
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+  }
 }
 </style>
 
@@ -254,13 +295,15 @@ li.list-item{
     </table>
 
     <div ng-if="contact.t2">
-            <h3>{{contact.t2.title}}</h3>
+            <h3 class="title">{{contact.t2.title}}</h3>
             <div>{{contact.t2.summary}}</div>
             <div>Standards</div>
 
-          <div ng-repeat="standard in contact.t2.standards" class="card">
+        <div ng-repeat="standard in contact.t2.standards">
+          <div class="card">
+
             <div class="card-title">
-              {{standard.title}}
+              <div class="title-sect {{standard.enacted}}">{{standard.title}}</div>
               <div class="label enacted" ng-if="standard.enacted === 'Yes'">
                 Enacted
               </div>
@@ -268,21 +311,23 @@ li.list-item{
                 Not Enacted
               </div>
             </div>
-            <div class="card-body">
-              <div>Age, {{standard.age}}</div>
-              <div>Related Legislation</div>
-              <div>Sources: {{standard.related_legislation.sources}}</div>
-              <div>Legislation: {{standard.related_legislation.legislation}}</div>
-            </div>
-          </div>
 
-          <div ng-if="contact.t2.notes.length > 0">
-            Notes:
-            <span ng-repeat="note in contact.t2.notes">
-              {{note.symbol}}{{note.text}}
-            </span>
+            <div class="card-body">
+              <div class="test{{standard.age.length}}">Age: <span>{{standard.age || "N/A"}}</span></div>
+              <div class="test{{standard.related_legislation.sources.length}}">Sources: <span>{{standard.related_legislation.sources || "N/A"}}</span></div>
+              <div class="test{{standard.related_legislation.sources.length}}">Legislation: <span>{{standard.related_legislation.legislation || "N/A"}}</span></div>
+            </div>
+
           </div>
-          
+        </div>
+
+        <div ng-if="contact.t2.notes.length > 0">
+          Notes:
+          <span ng-repeat="note in contact.t2.notes">
+            {{note.symbol}}{{note.text}}
+          </span>
+        </div>
+
     </div>
     <div ng-if="!(contact.t2)">
       "Laws and Regulations Related to Child Labor: No information provided"
