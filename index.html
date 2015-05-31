@@ -64,6 +64,16 @@ li.list-item{
 .tabs > li {
   width: 189px;
 }
+.table.stats th, .table.stats td{
+  color: #373737;
+  padding: 0 5px;
+}
+.table.stats td:first-child, .table.stats th:first-child{
+  text-align: left;
+}
+.table.stats td{
+  text-align: center;
+}
 </style>
 
 <div ng-app="android-addressbook">
@@ -220,15 +230,24 @@ li.list-item{
 
         <h3>{{ contact.Country }}</h3>
 
-		<ul class="list">
-			<li class="list-item" ng:repeat="item in contact.Goods">
-                <p class="good-item">Good name: {{item.Good_Name}}</p>
-                <p class="good-item">Child Labor: {{item.Child_Labor}}</p>
-                <p class="good-item">Forced Child Labor: {{item.Forced_Child_Labor}}</p>
-                <p class="good-item">Forced Labor: {{item.Forced_Labor}}</p>
-			</li>
-		</ul>
-
+		<table class="table stats">
+      <thead>
+        <tr>
+          <th>Good name</th>
+          <th>Child Labor</th>
+          <th>Forced Child Labor</th>
+          <th>Forced Labor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng:repeat="item in contact.Goods">
+          <td>{{item.Good_Name}}</td>
+          <td>{{item.Child_Labor}}</td>
+          <td>{{item.Forced_Child_Labor}}</td>
+          <td>{{item.Forced_Labor}}</td>
+        </tr>
+      </tbody>
+    </table>
 
 		</div>
 	</div>
